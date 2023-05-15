@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 		
 		if(!CreateFile(".byter\\.lock", "*.[oad]"))
 			throw_error("Failed to create .lock file");
-		if(!CreateFile(".byter\\.config", "last_shot =	0"))
+		if(!CreateFile(".byter\\.config", "last_shot=0"))
 			throw_error("Failed to create .config file");
 
 		return 0;

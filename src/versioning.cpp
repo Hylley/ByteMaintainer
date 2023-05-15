@@ -16,11 +16,18 @@ void shot(std::string origin_path, std::string destination_path)
 			if(fileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 			{
 				std::string folderName = fileData.cFileName;
-				if(folderName == "." || folderName == "..")
+				if(folderName == "." || folderName == ".." || folderName == ".byter")
 					continue;
 
 				std::string subfolder_origin = origin_path + folderName + "\\";
 				std::string subfolder_destination = destination_path + folderName + "\\";
+
+				// std::cout << "Folder: " << folderName << std::endl;
+				// std::cout << "Origin: " << subfolder_origin << std::endl;
+				// std::cout << "Destin: " << subfolder_destination << std::endl;
+
+				if(!CreateDirectory(subfolder_destination.c_str(), NULL))
+					throw_error("Failed creating destination subfolder \"" + subfolder_destination + "\"");
 
 				shot(subfolder_origin, subfolder_destination);
 			}
