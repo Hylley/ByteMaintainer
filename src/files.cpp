@@ -32,6 +32,17 @@ bool directory_exists(std::string folderPath)
 	return attributes != INVALID_FILE_ATTRIBUTES && (attributes	& FILE_ATTRIBUTE_DIRECTORY);
 }
 
+bool CreateFile(std::string path, std::string default_content)
+{
+	std::ofstream file(path);
+	if (!file.is_open())
+		return false;
+	file << default_content;
+	file.close();
+
+	return true;
+}
+
 std::regex config_regex("^(.+)=(.+)$");
 std::unordered_map<std::string,	std::string> load_config()
 {

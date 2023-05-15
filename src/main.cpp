@@ -25,18 +25,11 @@ int main(int argc, char *argv[])
 			throw_error("Failed to create main repo folder");
 		if(!CreateDirectory(".byter\\versions",	NULL))
 			throw_error("Failed to create versions folder");
-
-		std::ofstream lock_file(".byter\\.lock");
-		if (!lock_file.is_open())
+		
+		if(!CreateFile(".byter\\.lock", "*.[oad]"))
 			throw_error("Failed to create .lock file");
-		lock_file << "*.[oad]";
-		lock_file.close();
-
-		std::ofstream config_file(".byter\\.config");
-		if (!config_file.is_open())
+		if(!CreateFile(".byter\\.config", "last_shot =	0"))
 			throw_error("Failed to create .config file");
-		config_file	<< "last_shot =	0";
-		config_file.close();
 
 		return 0;
 	}
