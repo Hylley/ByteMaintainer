@@ -38,5 +38,6 @@
 *.psd
 *.png 
 
-# VScode config folder
+# Project specific olders
+.byter
 .vscode

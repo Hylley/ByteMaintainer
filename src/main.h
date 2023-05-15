@@ -1,5 +1,4 @@
-#ifndef MAIN_H
-#define MAIN_H
+#pragma once
 
 #include <stdio.h>
 #include <string>
@@ -10,8 +9,7 @@
 
 #include "debug.h"
 #include "files.h"
+#include "versioning.h"
 
 bool folder_exists(std::string folderPath);
 std::string trim(const std::string& str);
-
-#endif
