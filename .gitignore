@@ -30,3 +30,13 @@
 *.exe
 *.out
 *.app
+
+# Compiled resources
+*.res
+
+# Images
+*.psd
+*.png 
+
+# VScode config folder
+.vscode
