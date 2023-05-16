@@ -9,6 +9,7 @@ If you expect me to teach you how to clone the repository using Git, you are com
 - First, **download** it as a zip file from the GitHub page.
 - Extract the zip file to the desired location.
 - Run `make` to compile the source code into an executable called `byter.exe`.
+- Add the executable in Windows PATH variable to be able to run it anywhere.
 - If your antivirus warns you that it is a virus, ignore it. Trust me please.
 
 Alternatively, you can download the compiled binary from the release section.
