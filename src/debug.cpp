@@ -6,3 +6,8 @@ void throw_error(std::string error_message)
 
 	exit(1);
 }
+
+void throw_warn(std::string error_message)
+{
+	std::cout << "Warning: " << error_message << std::endl;
+}

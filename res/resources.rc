@@ -13,7 +13,7 @@ BEGIN
 			VALUE "InternalName", "byter"
 			VALUE "LegalCopyright", "ByteMaintainer"
 			VALUE "OriginalFilename", "byter.exe"
-			VALUE "ProductName", "ByteMaintainer"
+			VALUE "ProductName", "Byte Maintainer"
 			VALUE "ProductVersion", "0.1"
 		END
 	END

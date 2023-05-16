@@ -18,12 +18,38 @@ bool CreateFile(std::string path, std::string default_content)
 	return true;
 }
 
+std::vector<std::regex> load_lock_rules()
+{
+	std::ifstream lock_file(".byter\\.lock");
+	if(!lock_file.good())
+		throw_error("Unable	to open	.lock file");
+
+	std::vector<std::regex> result;
+
+	std::string	line;
+	while(getline(lock_file, line)){
+		if(line.rfind('#', 0) != std::string::npos)
+			continue;
+			
+		try
+		{
+			result.emplace_back(line);
+		}
+		catch (const std::regex_error& e)
+		{
+			throw_warn("Invalid lock rule: " + line);
+		}
+	}
+
+	return result;
+}
+
 std::regex config_regex("\\[[ ]*([^ ]*)[ ]*,[ ]*([^ ]*)[ ]*\\]");
 std::unordered_map<std::string,	std::string> load_config()
 {
 	std::ifstream config_file(".byter\\.config");
 	if(!config_file.good())
-		throw_error("Unable	to open	.config	file");
+		throw_error("Unable	to open	.config file");
 
 	std::unordered_map<std::string,	std::string> result;
 	std::smatch	matches;

@@ -6,6 +6,8 @@ int main(int argc, char *argv[])
 	if(argc	< 2)
 		throw_error("Command not specified");
 
+	SetConsoleOutputCP(65001);
+
 	std::string	instruction	= argv[1];
 
 	// do
@@ -26,7 +28,7 @@ int main(int argc, char *argv[])
 		if(!CreateDirectory(".byter\\versions",	NULL))
 			throw_error("Failed to create versions folder");
 		
-		if(!CreateFile(".byter\\.lock", "*.[oad]"))
+		if(!CreateFile(".byter\\.lock", "# You're not welcome here.\n.git"))
 			throw_error("Failed to create .lock file");
 		if(!CreateFile(".byter\\.config", "[last_shot, 0]"))
 			throw_error("Failed to create .config file");
@@ -39,19 +41,39 @@ int main(int argc, char *argv[])
 		if(!directory_exists(".byter"))
 			throw_error("Repository does not exists");
 		
+		if(argc	< 3)
+			throw_error("Shot needs a summary");
+		
+		std::string sumary = "";
+		for(unsigned int i = 2; i < argc; i++)
+		{
+			sumary += argv[i];
+			sumary += " ";
+		}
+
 		std::unordered_map<std::string,	std::string> config = load_config();
+		std::vector<std::regex> lock = load_lock_rules();
 		
 		std::string current_version = std::to_string(stoi(config["last_shot"]) + 1);
 		std::string path_to_copy = ".byter\\versions\\" + current_version + "\\";
+		
 		if(!CreateDirectory(path_to_copy.c_str(), NULL))
 			throw_error("Failed to create shot directory");
 		
-		shot("./", path_to_copy);
+		shot("./", path_to_copy, lock);
+
+		if(!CreateFile(path_to_copy + "sumary.txt", sumary))
+			throw_error("Failed to create sumary file");
 
 		config["last_shot"] = current_version;
 		set_config(config);
 
 		return 0;
+	}
+
+	if(instruction == "undo")
+	{
+
 	}
 }
 

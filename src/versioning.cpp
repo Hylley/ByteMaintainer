@@ -1,6 +1,6 @@
 #include "versioning.h"
 
-void shot(std::string origin_path, std::string destination_path)
+void shot(std::string origin_path, std::string destination_path, std::vector<std::regex>& rules)
 {
 	WIN32_FIND_DATA	fileData;
 	HANDLE hFind;
@@ -12,6 +12,19 @@ void shot(std::string origin_path, std::string destination_path)
 	{
 		do
 		{
+			if(fileData.dwFileAttributes & FILE_ATTRIBUTE_SYSTEM)
+				continue;
+
+			bool match = false;
+			for(unsigned int i = 0; i < rules.size(); i++)
+			{
+				match = std::regex_match(fileData.cFileName, rules[i]);
+				if(match)
+					break;
+			}
+			if(match)
+				continue;
+			
 			// If this is a folder
 			if(fileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 			{
@@ -29,7 +42,7 @@ void shot(std::string origin_path, std::string destination_path)
 				if(!CreateDirectory(subfolder_destination.c_str(), NULL))
 					throw_error("Failed creating destination subfolder \"" + subfolder_destination + "\"");
 
-				shot(subfolder_origin, subfolder_destination);
+				shot(subfolder_origin, subfolder_destination, rules);
 			}
 			// If not a folder, it's a file
 			else
