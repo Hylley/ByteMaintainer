@@ -13,7 +13,7 @@ After that, a folder called `.byter` will be created in the root folder of your 
 .byter
 ├── versions			# All the "shots" will be stored here;
 ├── .config			# Internal configuration. Just ignore;
-└── .lock			# All files matching one of the regex patterns written in here will be ignored.
+└── .lock			# Files matching one of the regex patterns written here will be ignored.
 ```
 Once you have done that, you are ready to proceed. To store a version of your code, type:
 ````
