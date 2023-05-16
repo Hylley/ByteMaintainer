@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 		
 		if(!CreateFile(".byter\\.lock", "*.[oad]"))
 			throw_error("Failed to create .lock file");
-		if(!CreateFile(".byter\\.config", "last_shot=0"))
+		if(!CreateFile(".byter\\.config", "[last_shot, 0]"))
 			throw_error("Failed to create .config file");
 
 		return 0;
@@ -41,12 +41,16 @@ int main(int argc, char *argv[])
 		
 		std::unordered_map<std::string,	std::string> config = load_config();
 		
-		unsigned int last_version = stoi(config["last_shot"]);
-		std::string path_to_copy = ".byter\\versions\\" + std::to_string(last_version + 1) + "\\";
+		std::string current_version = std::to_string(stoi(config["last_shot"]) + 1);
+		std::string path_to_copy = ".byter\\versions\\" + current_version + "\\";
 		if(!CreateDirectory(path_to_copy.c_str(), NULL))
 			throw_error("Failed to create shot directory");
 		
 		shot("./", path_to_copy);
+
+		config["last_shot"] = current_version;
+		set_config(config);
+
 		return 0;
 	}
 }

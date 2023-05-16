@@ -18,7 +18,7 @@ bool CreateFile(std::string path, std::string default_content)
 	return true;
 }
 
-std::regex config_regex("^(.+)=(.+)$");
+std::regex config_regex("\\[[ ]*([^ ]*)[ ]*,[ ]*([^ ]*)[ ]*\\]");
 std::unordered_map<std::string,	std::string> load_config()
 {
 	std::ifstream config_file(".byter\\.config");
@@ -32,8 +32,20 @@ std::unordered_map<std::string,	std::string> load_config()
 		if(!std::regex_match(line, matches,	config_regex))
 			throw_error("Bad .config file");
 		
-		result.insert({	 trim(matches[1]), trim(matches[2]) });
+		result.insert({	 matches[1], matches[2] });
 	}
 
 	return result;
+}
+
+bool set_config(std::unordered_map<std::string,	std::string> config)
+{
+	std::string result = "";
+
+	for (const auto& pair : config)
+	{
+		result += '[' + pair.first + ", " + pair.second + "]\n";
+	}
+
+	return CreateFile(".byter\\.config", result);
 }
